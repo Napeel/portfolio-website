@@ -448,14 +448,19 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         .full-screen-menu.fade-in {
-            animation: fadeIn 0.3s ease forwards;
+            opacity: 1;
+            visibility: visible;
         }
 
         .full-screen-menu.fade-out {
-            animation: fadeOut 0.3s ease forwards;
+            opacity: 0;
+            visibility: hidden;
         }
 
         .menu-content {
@@ -466,15 +471,15 @@
 
         .menu-item {
             font-size: 20px;
-            /* Match this to your header text size */
             color: #b19cd9;
             margin: 0.75rem 0;
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, transform 0.3s ease;
         }
 
         .menu-item:hover {
             color: #d8bfd8;
+            transform: scale(1.1);
         }
 
         .light-mode .menu-item {
@@ -491,30 +496,6 @@
 
         .fade-out .menu-item {
             animation: slideOut 0.3s ease forwards;
-        }
-
-        .fade-in .menu-item:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .fade-in .menu-item:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .fade-in .menu-item:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        .fade-out .menu-item:nth-child(1) {
-            animation-delay: 0s;
-        }
-
-        .fade-out .menu-item:nth-child(2) {
-            animation-delay: 0.05s;
-        }
-
-        .fade-out .menu-item:nth-child(3) {
-            animation-delay: 0.1s;
         }
 
         .toggle-button {
@@ -567,65 +548,8 @@
 
         .name-effect {
             display: inline-block;
-            transition: all 0.3s ease;
             text-decoration: none;
-        }
-
-        .name-effect:hover {
-            animation: colorLoop 2s linear infinite;
-            text-decoration: none;
-        }
-
-        .light-mode .name-effect {
-            color: #8a2be2;
-        }
-
-        @keyframes colorLoop {
-            0% {
-                color: #b19cd9;
-            }
-
-            25% {
-                color: #ff69b4;
-            }
-
-            50% {
-                color: #00ced1;
-            }
-
-            75% {
-                color: #ffa500;
-            }
-
-            100% {
-                color: #b19cd9;
-            }
-        }
-
-        @keyframes colorLoopLight {
-            0% {
-                color: #8a2be2;
-            }
-
-            25% {
-                color: #ff1493;
-            }
-
-            50% {
-                color: #1e90ff;
-            }
-
-            75% {
-                color: #ff4500;
-            }
-
-            100% {
-                color: #8a2be2;
-            }
-        }
-
-        .light-mode .name-effect:hover {
-            animation: colorLoopLight 2s linear infinite;
+            color: inherit;
         }
 
         .name-effect::after {
@@ -983,58 +907,6 @@
 
         .name-effect {
             margin: 0;
-            font-size: 16px;
-            font-weight: 600;
-            padding-left: 0.5rem;
-            height: 100%;
-            /* Fill the header height */
-            display: flex;
-            align-items: center;
-        }
-
-        .occupation,
-        .location,
-        .toggle-button {
-            font-size: 16px;
-            margin-left: 0.5rem;
-            height: 100%;
-            /* Fill the header height */
-            display: flex;
-            align-items: center;
-        }
-
-        .location-icon {
-            margin-right: 0.25rem;
-        }
-
-        @media (max-width: 768px) {
-            header {
-                height: auto;
-                /* Allow header to adjust its height on mobile */
-            }
-
-            .header-content {
-                flex-wrap: wrap;
-                justify-content: flex-start;
-                padding: 2px 0.25rem;
-                /* Minimal vertical padding */
-            }
-
-            .header-right {
-                margin-top: 2px;
-                /* Minimal top margin */
-            }
-
-            .occupation,
-            .location,
-            .toggle-button {
-                margin-left: 0;
-                margin-right: 0.5rem;
-            }
-        }
-
-        .name-effect {
-            margin: 0;
             font-size: 20px;
             /* Increased from 16px */
             font-weight: 600;
@@ -1093,6 +965,8 @@
         .full-screen-menu .menu-content .menu-item {
             font-size: 20px !important;
             /* Match this to your header text size */
+            font-weight: bold !important;
+            /* Added bold styling */
             color: #b19cd9 !important;
             margin: 0.75rem 0 !important;
             cursor: pointer !important;
@@ -1110,6 +984,400 @@
         .light-mode .full-screen-menu .menu-content .menu-item:hover {
             color: #9370db !important;
         }
+
+        /* Ensure all header elements are visible initially */
+        .header-left>*,
+        .header-right>* {
+            opacity: 1;
+        }
+
+        @keyframes slideFromLeft {
+            from {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideFromRight {
+            from {
+                transform: translateX(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-header .header-left>* {
+            animation: slideFromLeft 1s ease-out forwards;
+        }
+
+        .animate-header .header-right>* {
+            animation: slideFromRight 1s ease-out forwards;
+        }
+
+        /* Staggered delays for elements */
+        .animate-header .header-left>*:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .animate-header .header-left>*:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        /* This is the name */
+        .animate-header .header-right>*:nth-child(1) {
+            animation-delay: 0.3s;
+        }
+
+        .animate-header .header-right>*:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .animate-header .header-right>*:nth-child(3) {
+            animation-delay: 0.5s;
+        }
+
+        /* Styles for the name, without hover animation */
+        .name-effect {
+            display: inline-block;
+            text-decoration: none;
+            /* Add any other styles you want for the name */
+            color: inherit;
+            /* This ensures the name color matches the current theme */
+        }
+
+        /* Remove any hover effects */
+        .name-effect:hover {
+            /* No special effects on hover */
+        }
+
+        .name-effect {
+            display: inline-block;
+            text-decoration: none;
+            color: inherit;
+            opacity: 1 !important;
+            /* Force opacity to be 1 */
+            visibility: visible !important;
+            /* Ensure visibility */
+            position: relative;
+            /* Add this to ensure proper stacking */
+            z-index: 10;
+            /* Ensure it's above other elements */
+        }
+
+        /* Remove any animations specifically for the name */
+        .animate-header .header-left>*:nth-child(2) {
+            animation: none;
+        }
+
+        .header-left {
+            overflow: visible;
+        }
+
+        .name-effect {
+            transform: none !important;
+            clip: auto !important;
+            clip-path: none !important;
+        }
+
+        header {
+            background-color: #1c1c1c;
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 50px;
+        }
+
+        .header-left,
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #b19cd9;
+            margin-right: 15px;
+            padding: 0;
+        }
+
+        .name-effect {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .occupation,
+        .location,
+        .toggle-button {
+            font-size: 16px;
+            margin-left: 15px;
+            color: #ffffff;
+        }
+
+        .location-icon {
+            margin-right: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 10px 20px;
+            }
+
+            .header-right {
+                margin-top: 10px;
+            }
+
+            .occupation,
+            .location,
+            .toggle-button {
+                margin-left: 0;
+                margin-right: 15px;
+            }
+        }
+
+        .header-left {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .name-wrapper {
+            margin-left: 15px;
+            /* Adjust as needed */
+            position: relative;
+            z-index: 10;
+            /* Bring it to the front */
+        }
+
+        .name-effect {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+            /* Ensure this contrasts with your background */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 10;
+            /* Bring it to the front */
+            white-space: nowrap;
+            /* Prevent wrapping */
+            overflow: visible;
+            /* Ensure it's not being cut off */
+        }
+
+        /* Ensure the name is visible in light mode */
+        .light-mode .name-effect {
+            color: #1c1c1c;
+        }
+
+        /* Adjust header content layout */
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Ensure no other elements in the header are overlapping */
+        .header-content>* {
+            position: relative;
+            z-index: 5;
+        }
+
+        /* If there's a background or pseudo-element that might be covering the name, adjust its z-index */
+        .header-content::before,
+        .header-content::after {
+            z-index: 1;
+        }
+
+        header {
+            /* ... existing styles ... */
+            display: flex;
+            align-items: center;
+            height: 60px;
+            /* Adjust this value as needed */
+            padding: 0 20px;
+            /* Add some horizontal padding */
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .header-left,
+        .header-right {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .name-wrapper {
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .name-effect {
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            /* Adjust as needed */
+            line-height: 1;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .menu-button,
+        .occupation,
+        .location,
+        .toggle-button {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* Adjust spacing as needed */
+        .occupation,
+        .location {
+            margin-right: 15px;
+        }
+
+        /* Ensure text is vertically centered */
+        .occupation,
+        .city-name {
+            line-height: 1;
+        }
+
+        .main-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            height: 60px;
+            /* Adjust as needed */
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-button {
+            margin-right: 15px;
+        }
+
+        .header-name {
+            font-size: 20px;
+            margin: 0;
+            padding: 0;
+            color: inherit;
+        }
+
+        /* Styles for other header elements */
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .occupation,
+        .location {
+            margin-right: 15px;
+        }
+
+        .name-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .header-name {
+            font-size: 24px;
+            margin: 0;
+            padding: 0;
+            color: inherit;
+            transition: text-shadow 0.3s ease;
+        }
+
+        .name-container:hover .header-name {
+            animation: subtleFlicker 2s infinite alternate;
+        }
+
+        @keyframes subtleFlicker {
+            0% {
+                text-shadow:
+                    0 0 2px #fff,
+                    0 0 4px #fff,
+                    0 0 6px #fff,
+                    0 0 8px #ff00de,
+                    0 0 14px #ff00de,
+                    0 0 16px #ff00de;
+            }
+
+            100% {
+                text-shadow:
+                    0 0 1px #fff,
+                    0 0 2px #fff,
+                    0 0 3px #fff,
+                    0 0 4px #ff00de,
+                    0 0 7px #ff00de,
+                    0 0 8px #ff00de;
+            }
+        }
+
+        .header-name {
+            font-size: 24px;
+            margin: 0;
+            padding: 0;
+            color: inherit;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden; /* This will hide the name when it slides out */
+        }
     </style>
 </head>
 
@@ -1118,7 +1386,7 @@
     <div id="custom-cursor"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useRef } = React;
 
         const ToggleButton = ({ toggleTheme, isDarkMode }) => (
             <button className="toggle-button" onClick={toggleTheme}>
@@ -1127,21 +1395,14 @@
         );
 
         const Header = ({ name, occupation, city, toggleMenu, toggleTheme, isDarkMode }) => {
-            const scrollToTop = () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            };
-
             return (
-                <header>
+                <header className="main-header">
                     <div className="header-content">
                         <div className="header-left">
                             <button className="menu-button" onClick={toggleMenu} aria-label="Menu">
                                 <i className="fas fa-cookie"></i>
                             </button>
-                            <h1 className="name-effect" onClick={scrollToTop} style={{ cursor: 'pointer' }}>{name}</h1>
+                            <h1 className="header-name">{name}</h1>
                         </div>
                         <div className="header-right">
                             <span className="occupation">{occupation}</span>
@@ -1161,7 +1422,7 @@
                 <a href="https://github.com/Napeel" target="_blank" rel="noopener noreferrer">
                     <i className="fab fa-github"></i>
                 </a>
-                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/nabil-muzafar-shah-62363a229/" target="_blank" rel="noopener noreferrer">
                     <i className="fab fa-linkedin"></i>
                 </a>
             </div>
@@ -1238,24 +1499,17 @@
                 }
             }, [menuState]);
 
-            useEffect(() => {
-                const handleClickOutside = (event) => {
-                    if (menuState === 'open' && event.target.classList.contains('full-screen-menu')) {
-                        closeMenu();
-                    }
-                };
-
-                document.addEventListener('click', handleClickOutside);
-
-                return () => {
-                    document.removeEventListener('click', handleClickOutside);
-                };
-            }, [menuState, closeMenu]);
-
             if (menuState === 'closed') return null;
 
             return (
-                <div className={`full-screen-menu ${menuState === 'opening' || menuState === 'open' ? 'fade-in' : 'fade-out'}`}>
+                <div
+                    className={`full-screen-menu ${menuState === 'opening' || menuState === 'open' ? 'fade-in' : 'fade-out'}`}
+                    onClick={(e) => {
+                        if (e.target.classList.contains('full-screen-menu')) {
+                            closeMenu();
+                        }
+                    }}
+                >
                     <div className="menu-content">
                         <div className="menu-item" onClick={() => { window.location.href = 'sss.html'; }}>Home</div>
                         <div className="menu-item" onClick={() => { window.location.href = 'interests.html'; }}>Personal Interests</div>
@@ -1308,6 +1562,11 @@
 
             useEffect(() => {
                 document.body.className = isDarkMode ? 'dark-mode' : 'light-mode';
+
+                const header = document.querySelector('header');
+                header.classList.remove('animate-header');
+                void header.offsetWidth; // Trigger reflow
+                header.classList.add('animate-header');
             }, [isDarkMode]);
 
             return (
