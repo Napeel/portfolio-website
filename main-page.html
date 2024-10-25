@@ -16,6 +16,8 @@
             margin: 0;
             padding: 0;
             transition: background-color 0.3s, color 0.3s;
+            font-size: 16px;
+            /* Base font size for the entire site */
         }
 
         .dark-mode {
@@ -28,15 +30,16 @@
             color: #1c1c1c;
         }
 
-        header {
+        body header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            padding: 1rem;
             background-color: rgba(28, 28, 28, 0.8);
             backdrop-filter: blur(10px);
             z-index: 1000;
+            height: 40px;
+            /* Increased from 30px */
         }
 
         .light-mode header {
@@ -49,28 +52,39 @@
             justify-content: space-between;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 0.5rem;
+            /* Slightly increased horizontal padding */
+            height: 100%;
         }
 
-        .header-left {
-            display: flex;
-            align-items: center;
-        }
-
+        .header-left,
         .header-right {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            height: 100%;
         }
 
         .menu-button {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 28px !important;
+            /* Increased and made important */
             cursor: pointer;
             color: #b19cd9;
-            margin-right: 1rem;
+            margin-right: 0.75rem;
             padding: 0;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            width: auto;
+            /* Ensure the button doesn't constrain the icon */
+        }
+
+        .menu-button i.fas.fa-cookie {
+            font-size: 28px !important;
+            /* Target the specific icon class and make important */
+            width: auto;
+            height: auto;
         }
 
         .menu-button:hover {
@@ -89,11 +103,48 @@
             margin: 0;
             font-size: 1.5rem;
             font-weight: 600;
+            line-height: 1;
+        }
+
+        .occupation,
+        .location {
+            margin-left: 1rem;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .location {
+            display: flex;
+            align-items: center;
+        }
+
+        .location-icon {
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-right {
+                margin-top: 0.5rem;
+                justify-content: flex-start;
+                width: 100%;
+            }
+
+            .occupation,
+            .location {
+                margin-left: 0;
+                margin-right: 1rem;
+                margin-top: 0.5rem;
+            }
         }
 
         .header-info {
-            margin-left: auto;
             display: flex;
+            align-items: center;
             gap: 1rem;
             font-size: 0.9rem;
         }
@@ -195,16 +246,16 @@
                 font-size: 14px;
             }
 
-            header {
+            body header {
                 padding: 0.5rem;
             }
 
-            .header-content {
+            body .header-content {
                 flex-direction: column;
                 align-items: flex-start;
             }
 
-            .header-info {
+            body .header-info {
                 margin-top: 0.5rem;
             }
 
@@ -220,7 +271,7 @@
                 font-size: 1.1rem;
             }
 
-            .toggle-button {
+            body .toggle-button {
                 top: 8px;
                 right: 8px;
             }
@@ -351,6 +402,16 @@
             }
         }
 
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
         @keyframes slideIn {
             from {
                 transform: translateY(20px);
@@ -360,6 +421,18 @@
             to {
                 transform: translateY(0);
                 opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(20px);
+                opacity: 0;
             }
         }
 
@@ -375,15 +448,14 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
-        .full-screen-menu.open {
-            opacity: 1;
-            visibility: visible;
+        .full-screen-menu.fade-in {
             animation: fadeIn 0.3s ease forwards;
+        }
+
+        .full-screen-menu.fade-out {
+            animation: fadeOut 0.3s ease forwards;
         }
 
         .menu-content {
@@ -393,38 +465,16 @@
         }
 
         .menu-item {
-            font-size: 2rem;
+            font-size: 20px;
+            /* Match this to your header text size */
             color: #b19cd9;
-            margin: 1rem 0;
+            margin: 0.75rem 0;
             cursor: pointer;
-            transition: color 0.3s, transform 0.3s ease;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .full-screen-menu.open .menu-item {
-            animation: slideIn 0.5s ease forwards;
-        }
-
-        .full-screen-menu.open .menu-item:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .full-screen-menu.open .menu-item:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .full-screen-menu.open .menu-item:nth-child(3) {
-            animation-delay: 0.3s;
+            transition: color 0.3s ease;
         }
 
         .menu-item:hover {
             color: #d8bfd8;
-            transform: scale(1.05);
-        }
-
-        .light-mode .full-screen-menu {
-            background-color: rgba(255, 255, 255, 0.9);
         }
 
         .light-mode .menu-item {
@@ -433,6 +483,38 @@
 
         .light-mode .menu-item:hover {
             color: #9370db;
+        }
+
+        .fade-in .menu-item {
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        .fade-out .menu-item {
+            animation: slideOut 0.3s ease forwards;
+        }
+
+        .fade-in .menu-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .fade-in .menu-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .fade-in .menu-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .fade-out .menu-item:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .fade-out .menu-item:nth-child(2) {
+            animation-delay: 0.05s;
+        }
+
+        .fade-out .menu-item:nth-child(3) {
+            animation-delay: 0.1s;
         }
 
         .toggle-button {
@@ -485,50 +567,555 @@
 
         .name-effect {
             display: inline-block;
-            position: relative;
             transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .name-effect:hover {
+            animation: colorLoop 2s linear infinite;
+            text-decoration: none;
+        }
+
+        .light-mode .name-effect {
+            color: #8a2be2;
+        }
+
+        @keyframes colorLoop {
+            0% {
+                color: #b19cd9;
+            }
+
+            25% {
+                color: #ff69b4;
+            }
+
+            50% {
+                color: #00ced1;
+            }
+
+            75% {
+                color: #ffa500;
+            }
+
+            100% {
+                color: #b19cd9;
+            }
+        }
+
+        @keyframes colorLoopLight {
+            0% {
+                color: #8a2be2;
+            }
+
+            25% {
+                color: #ff1493;
+            }
+
+            50% {
+                color: #1e90ff;
+            }
+
+            75% {
+                color: #ff4500;
+            }
+
+            100% {
+                color: #8a2be2;
+            }
+        }
+
+        .light-mode .name-effect:hover {
+            animation: colorLoopLight 2s linear infinite;
         }
 
         .name-effect::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: -2px;
-            left: 0;
-            background-image: linear-gradient(90deg, #b19cd9, #d8bfd8);
-            transform: scaleX(0);
-            transform-origin: bottom right;
-            transition: transform 0.3s ease;
-        }
-
-        .name-effect:hover::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
-        }
-
-        .light-mode .name-effect::after {
-            background-image: linear-gradient(90deg, #8a2be2, #9370db);
+            content: none;
         }
 
         .location {
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .location:hover {
+            background-color: rgba(177, 156, 217, 0.2);
+        }
+
+        .location:hover .location-icon,
+        .location:hover .city-name {
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        .location-icon {
+            margin-right: 5px;
+            font-size: 1.2em;
+            color: #b19cd9;
+            transition: color 0.3s ease;
+        }
+
+        .city-name {
+            color: #b19cd9;
+            transition: color 0.3s ease;
+        }
+
+        .location:hover .location-icon,
+        .location:hover .city-name {
+            color: #d8bfd8;
+        }
+
+        .light-mode .location-icon,
+        .light-mode .city-name {
+            color: #8a2be2;
+        }
+
+        .light-mode .location:hover {
+            background-color: rgba(138, 43, 226, 0.1);
+        }
+
+        .light-mode .location:hover .location-icon,
+        .light-mode .location:hover .city-name {
+            color: #9370db;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .weather-icon {
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .location {
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .location:hover {
+            background-color: rgba(177, 156, 217, 0.2);
+        }
+
+        .location:hover .location-icon,
+        .location:hover .city-name {
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        .location-icon {
+            margin-right: 5px;
+            font-size: 1.2em;
+            color: #b19cd9;
+            transition: color 0.3s ease;
+        }
+
+        .city-name {
+            color: #b19cd9;
+            transition: color 0.3s ease;
+        }
+
+        .location:hover .location-icon,
+        .location:hover .city-name {
+            color: #d8bfd8;
+        }
+
+        .light-mode .location-icon,
+        .light-mode .city-name {
+            color: #8a2be2;
+        }
+
+        .light-mode .location:hover {
+            background-color: rgba(138, 43, 226, 0.1);
+        }
+
+        .light-mode .location:hover .location-icon,
+        .light-mode .location:hover .city-name {
+            color: #9370db;
+        }
+
+        #custom-cursor {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #ff00ff;
+            /* Bright magenta color */
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            /* Increase this value */
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff, 0 0 45px #ff00ff;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff, 0 0 45px #ff00ff;
+            }
+
+            50% {
+                box-shadow: 0 0 25px #d8bfd8, 0 0 50px #d8bfd8, 0 0 75px #d8bfd8;
+            }
+
+            100% {
+                box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff, 0 0 45px #ff00ff;
+            }
+        }
+
+        body,
+        a,
+        button,
+        .menu-button,
+        .location,
+        .name-effect {
+            cursor: none !important;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            /* Reduced from 2.5rem */
+            color: #b19cd9;
+            text-shadow:
+                1.5px 1.5px 0px #8a2be2,
+                /* Slightly reduced shadow */
+                3px 3px 0px rgba(0, 0, 0, 0.2);
+            transition: color 0.3s ease;
+        }
+
+        .light-mode .section-header h2 {
+            color: #8a2be2;
+            text-shadow:
+                1.5px 1.5px 0px #b19cd9,
+                /* Slightly reduced shadow */
+                3px 3px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Add responsive font size for smaller screens */
+        @media (max-width: 768px) {
+            .section-header h2 {
+                font-size: 1.75rem;
+                /* Even smaller on mobile devices */
+                text-shadow:
+                    1px 1px 0px #8a2be2,
+                    2px 2px 0px rgba(0, 0, 0, 0.2);
+            }
+
+            .light-mode .section-header h2 {
+                text-shadow:
+                    1px 1px 0px #b19cd9,
+                    2px 2px 0px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        /* Remove these Typed.js related styles */
+        #typed-header,
+        .header-left {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            min-height: 4.5em;
+            /* Adjust based on your content */
+        }
+
+        .typed-cursor {
+            font-size: 1.2rem;
+        }
+
+        /* End of removed Typed.js styles */
+
+        .name-effect:hover {
+            color: #d8bfd8;
+            /* Or any color you prefer for hover state */
+        }
+
+        /* Header styles */
+        .header-content {
             display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+            /* Removed padding */
         }
 
-        .location i {
-            color: #b19cd9;
+        .menu-button,
+        .name-effect,
+        .occupation,
+        .location,
+        .toggle-button,
+        .section-header h2,
+        .project h3,
+        .skills-category h3,
+        p,
+        .skills-list li,
+        .menu-item {
+            font-size: 16px;
+            /* Consistent font size */
+            line-height: 1.2;
+            /* Adjusted line height for better readability */
         }
 
-        .light-mode .location i {
-            color: #8a2be2;
+        /* Adjust icon sizes */
+        .menu-button i,
+        .location-icon,
+        .toggle-button i {
+            font-size: 16px;
+        }
+
+        /* Remove any font-size declarations from other selectors */
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+                /* Slightly smaller base font size for mobile */
+            }
+
+            .menu-button,
+            .name-effect,
+            .occupation,
+            .location,
+            .toggle-button,
+            .section-header h2,
+            .project h3,
+            .skills-category h3,
+            p,
+            .skills-list li,
+            .menu-item {
+                font-size: 14px;
+                /* Consistent font size for mobile */
+            }
+
+            /* Adjust icon sizes for mobile */
+            .menu-button i,
+            .location-icon,
+            .toggle-button i {
+                font-size: 14px;
+            }
+        }
+
+        /* You may also want to add some left padding to the name for symmetry */
+        .name-effect {
+            padding-left: 0.5rem;
+        }
+
+        .name-effect {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1;
+            padding-left: 0.5rem;
+        }
+
+        .occupation,
+        .location,
+        .toggle-button {
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .location-icon {
+            margin-right: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+
+            .header-right {
+                margin-top: 0.25rem;
+            }
+
+            .occupation,
+            .location,
+            .toggle-button {
+                margin-left: 0;
+                margin-right: 0.5rem;
+            }
+        }
+
+        .name-effect {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            padding-left: 0.5rem;
+            height: 100%;
+            /* Fill the header height */
+            display: flex;
+            align-items: center;
+        }
+
+        .occupation,
+        .location,
+        .toggle-button {
+            font-size: 16px;
+            margin-left: 0.5rem;
+            height: 100%;
+            /* Fill the header height */
+            display: flex;
+            align-items: center;
+        }
+
+        .location-icon {
+            margin-right: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                height: auto;
+                /* Allow header to adjust its height on mobile */
+            }
+
+            .header-content {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                padding: 2px 0.25rem;
+                /* Minimal vertical padding */
+            }
+
+            .header-right {
+                margin-top: 2px;
+                /* Minimal top margin */
+            }
+
+            .occupation,
+            .location,
+            .toggle-button {
+                margin-left: 0;
+                margin-right: 0.5rem;
+            }
+        }
+
+        .name-effect {
+            margin: 0;
+            font-size: 20px;
+            /* Increased from 16px */
+            font-weight: 600;
+            padding-left: 0.75rem;
+            /* Slightly increased */
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .occupation,
+        .location,
+        .toggle-button {
+            font-size: 18px;
+            /* Increased from 16px */
+            margin-left: 0.75rem;
+            /* Slightly increased */
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .location-icon {
+            margin-right: 0.3rem;
+            /* Slightly increased */
+            font-size: 18px;
+            /* Match the text size */
+        }
+
+        @media (max-width: 768px) {
+            header {
+                height: auto;
+            }
+
+            .header-content {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                padding: 4px 0.5rem;
+                /* Slightly increased padding */
+            }
+
+            .header-right {
+                margin-top: 4px;
+                /* Slightly increased */
+            }
+
+            .occupation,
+            .location,
+            .toggle-button {
+                margin-left: 0;
+                margin-right: 0.75rem;
+                /* Slightly increased */
+            }
+        }
+
+        .full-screen-menu .menu-content .menu-item {
+            font-size: 20px !important;
+            /* Match this to your header text size */
+            color: #b19cd9 !important;
+            margin: 0.75rem 0 !important;
+            cursor: pointer !important;
+            transition: color 0.3s ease !important;
+        }
+
+        .full-screen-menu .menu-content .menu-item:hover {
+            color: #d8bfd8 !important;
+        }
+
+        .light-mode .full-screen-menu .menu-content .menu-item {
+            color: #8a2be2 !important;
+        }
+
+        .light-mode .full-screen-menu .menu-content .menu-item:hover {
+            color: #9370db !important;
         }
     </style>
 </head>
 
 <body class="dark-mode">
     <div id="root"></div>
+    <div id="custom-cursor"></div>
 
     <script type="text/babel">
         const { useState, useEffect } = React;
@@ -539,29 +1126,39 @@
             </button>
         );
 
-        const Header = ({ name, occupation, city, toggleMenu, toggleTheme, isDarkMode }) => (
-            <header>
-                <div className="header-content">
-                    <div className="header-left">
-                        <button className="menu-button" onClick={toggleMenu} aria-label="Menu">
-                            <i className="fas fa-cookie"></i>
-                        </button>
-                        <h1 className="name-effect">{name}</h1>
+        const Header = ({ name, occupation, city, toggleMenu, toggleTheme, isDarkMode }) => {
+            const scrollToTop = () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            };
+
+            return (
+                <header>
+                    <div className="header-content">
+                        <div className="header-left">
+                            <button className="menu-button" onClick={toggleMenu} aria-label="Menu">
+                                <i className="fas fa-cookie"></i>
+                            </button>
+                            <h1 className="name-effect" onClick={scrollToTop} style={{ cursor: 'pointer' }}>{name}</h1>
+                        </div>
+                        <div className="header-right">
+                            <span className="occupation">{occupation}</span>
+                            <a href="https://www.google.com/maps/place/Montreal,+QC" target="_blank" rel="noopener noreferrer" className="location">
+                                <i className="fas fa-map-marker-alt location-icon"></i>
+                                <span className="city-name">{city}</span>
+                            </a>
+                            <ToggleButton toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
+                        </div>
                     </div>
-                    <div className="header-right">
-                        <span className="occupation">{occupation}</span>
-                        <span className="location">
-                            <i className="fas fa-map-marker-alt"></i> {city}
-                        </span>
-                        <ToggleButton toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
-                    </div>
-                </div>
-            </header>
-        );
+                </header>
+            );
+        };
 
         const SocialIcons = () => (
             <div className="social-icons">
-                <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/Napeel" target="_blank" rel="noopener noreferrer">
                     <i className="fab fa-github"></i>
                 </a>
                 <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">
@@ -621,9 +1218,29 @@
         );
 
         const FullScreenMenu = ({ isOpen, closeMenu }) => {
+            const [menuState, setMenuState] = useState('closed');
+
+            useEffect(() => {
+                if (isOpen && menuState === 'closed') {
+                    setMenuState('opening');
+                } else if (!isOpen && menuState === 'open') {
+                    setMenuState('closing');
+                }
+            }, [isOpen]);
+
+            useEffect(() => {
+                if (menuState === 'opening') {
+                    const timer = setTimeout(() => setMenuState('open'), 300);
+                    return () => clearTimeout(timer);
+                } else if (menuState === 'closing') {
+                    const timer = setTimeout(() => setMenuState('closed'), 300);
+                    return () => clearTimeout(timer);
+                }
+            }, [menuState]);
+
             useEffect(() => {
                 const handleClickOutside = (event) => {
-                    if (isOpen && event.target.classList.contains('full-screen-menu')) {
+                    if (menuState === 'open' && event.target.classList.contains('full-screen-menu')) {
                         closeMenu();
                     }
                 };
@@ -633,12 +1250,12 @@
                 return () => {
                     document.removeEventListener('click', handleClickOutside);
                 };
-            }, [isOpen, closeMenu]);
+            }, [menuState, closeMenu]);
 
-            if (!isOpen) return null;
+            if (menuState === 'closed') return null;
 
             return (
-                <div className={`full-screen-menu ${isOpen ? 'open' : ''}`}>
+                <div className={`full-screen-menu ${menuState === 'opening' || menuState === 'open' ? 'fade-in' : 'fade-out'}`}>
                     <div className="menu-content">
                         <div className="menu-item" onClick={() => { window.location.href = 'sss.html'; }}>Home</div>
                         <div className="menu-item" onClick={() => { window.location.href = 'interests.html'; }}>Personal Interests</div>
@@ -646,6 +1263,21 @@
                     </div>
                 </div>
             );
+        };
+
+        const fetchWeather = async () => {
+            const apiKey = 'YOUR_API_KEY_HERE';
+            const city = 'Montreal';
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                return data.weather[0].icon;
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                return 'default';
+            }
         };
 
         const App = () => {
@@ -661,9 +1293,9 @@
                 setIsMenuOpen(!isMenuOpen);
             };
 
-            useEffect(() => {
-                document.body.className = isDarkMode ? 'dark-mode' : 'light-mode';
-            }, [isDarkMode]);
+            const closeMenu = () => {
+                setIsMenuOpen(false);
+            };
 
             const programmingLanguages = ['Python', 'Java', 'C++', 'C#', 'HTML', 'JavaScript'];
             const developerTools = ['Git', 'GitHub', 'AWS', 'React.js', 'Spring Boot'];
@@ -673,6 +1305,10 @@
                 'Malay (Fluent)',
                 'French (Working proficiency)'
             ];
+
+            useEffect(() => {
+                document.body.className = isDarkMode ? 'dark-mode' : 'light-mode';
+            }, [isDarkMode]);
 
             return (
                 <div>
@@ -684,9 +1320,8 @@
                         toggleTheme={toggleTheme}
                         isDarkMode={isDarkMode}
                     />
-                    <FullScreenMenu isOpen={isMenuOpen} closeMenu={toggleMenu} />
+                    <FullScreenMenu isOpen={isMenuOpen} closeMenu={closeMenu} />
                     <main>
-                        <ToggleButton toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
                         <Section title="About" showSocialIcons={true}>
                             <p>Software Engineering Co-op student at McGill University.</p>
                         </Section>
@@ -723,6 +1358,83 @@
         };
 
         ReactDOM.render(<App />, document.getElementById('root'));
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.getElementById('custom-cursor');
+            console.log('Cursor element:', cursor); // Add this line
+
+            const updateCursor = (e) => {
+                cursor.style.left = `${e.clientX}px`;
+                cursor.style.top = `${e.clientY}px`;
+            };
+
+            document.addEventListener('mousemove', updateCursor);
+
+            const hoverElements = document.querySelectorAll('a, button, .menu-button, .location, .name-effect');
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursor.style.width = '30px';
+                    cursor.style.height = '30px';
+                    cursor.style.backgroundColor = '#ff00ff';
+                });
+                element.addEventListener('mouseleave', () => {
+                    cursor.style.width = '20px';
+                    cursor.style.height = '20px';
+                    cursor.style.backgroundColor = '#ff00ff';
+                });
+            });
+
+            document.addEventListener('mousedown', () => {
+                cursor.style.width = '35px';
+                cursor.style.height = '35px';
+            });
+
+            document.addEventListener('mouseup', () => {
+                cursor.style.width = '20px';
+                cursor.style.height = '20px';
+            });
+
+            console.log('Custom cursor script loaded and executed');
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.getElementById('custom-cursor');
+            console.log('Cursor element:', cursor); // Add this line
+
+            const updateCursor = (e) => {
+                cursor.style.left = `${e.clientX}px`;
+                cursor.style.top = `${e.clientY}px`;
+            };
+
+            document.addEventListener('mousemove', updateCursor);
+
+            const hoverElements = document.querySelectorAll('a, button, .menu-button, .location, .name-effect');
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursor.style.width = '30px';
+                    cursor.style.height = '30px';
+                    cursor.style.backgroundColor = '#ff00ff';
+                });
+                element.addEventListener('mouseleave', () => {
+                    cursor.style.width = '20px';
+                    cursor.style.height = '20px';
+                    cursor.style.backgroundColor = '#ff00ff';
+                });
+            });
+
+            document.addEventListener('mousedown', () => {
+                cursor.style.width = '35px';
+                cursor.style.height = '35px';
+            });
+
+            document.addEventListener('mouseup', () => {
+                cursor.style.width = '20px';
+                cursor.style.height = '20px';
+            });
+
+            console.log('Custom cursor script loaded and executed');
+        });
     </script>
 </body>
 
