@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Portfolio</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+            font-size: 16px;
+        }
+
+        body.dark-mode {
+            background-color: #1c1c1c;
+            color: #ffffff;
+        }
+
+        body.light-mode {
+            background-color: #ffffff;
+            color: #1c1c1c;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 0.75rem 2rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #1c1c1c;
+            z-index: 1000;
+            transition: background-color 0.3s;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode header {
+            background-color: rgba(28, 28, 28, 0.8);
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content h1 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .header-info {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+        }
+
+        a {
+            color: #0066cc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .dark-mode a {
+            color: #66b3ff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .toggle-button {
+            position: fixed;
+            top: 12px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 1001;
+            color: white;
+        }
+
+        .light-mode .toggle-button {
+            color: #1c1c1c;
+        }
+
+        .section {
+            padding: 4rem 1rem;
+        }
+
+        .section-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .light-mode .project {
+            background-color: #f0f0f0;
+        }
+
+        .dark-mode .project {
+            background-color: #2a2a2a;
+        }
+
+        .project:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .project.expanded {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-content {
+            max-height: 100px;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .project.expanded .project-content {
+            max-height: 1000px;
+        }
+
+        .project-details {
+            margin-top: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .project.expanded .project-details {
+            opacity: 1;
+        }
+
+        .project-expand-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .project.expanded .project-expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background-color: #0066cc;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        .dark-mode .skill-tag {
+            background-color: #66b3ff;
+            color: #1c1c1c;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+
+            header {
+                padding: 0.5rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-info {
+                margin-top: 0.5rem;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            h2 {
+                font-size: 1.25rem;
+            }
+
+            h3 {
+                font-size: 1.1rem;
+            }
+
+            .toggle-button {
+                top: 8px;
+                right: 8px;
+            }
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            color: inherit;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #0066cc;
+        }
+
+        .dark-mode .social-icons a:hover {
+            color: #66b3ff;
+        }
+    </style>
+</head>
+
+<body class="dark-mode">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const Header = ({ name, occupation, city }) => (
+            <header>
+                <div className="header-content">
+                    <h1>{name}</h1>
+                    <div className="header-info">
+                        <span>{occupation}</span>
+                        <span>{city}</span>
+                    </div>
+                </div>
+            </header>
+        );
+
+        const ToggleButton = ({ toggleTheme, isDarkMode }) => (
+            <button className="toggle-button" onClick={toggleTheme}>
+                <i className={isDarkMode ? "far fa-sun" : "far fa-moon"}></i>
+            </button>
+        );
+
+        const SocialIcons = () => (
+            <div className="social-icons">
+                <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
+                    <i className="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">
+                    <i className="fab fa-linkedin"></i>
+                </a>
+            </div>
+        );
+
+        const Section = ({ title, children, showSocialIcons = false }) => (
+            <section className="section">
+                <div className="section-content">
+                    <div className="section-header">
+                        <h2>{title}</h2>
+                        {showSocialIcons && <SocialIcons />}
+                    </div>
+                    {children}
+                </div>
+            </section>
+        );
+
+        const Project = ({ title, description, link, details }) => {
+            const [isExpanded, setIsExpanded] = useState(false);
+
+            const toggleExpand = (e) => {
+                e.preventDefault();
+                setIsExpanded(!isExpanded);
+            };
+
+            return (
+                <div className={`project ${isExpanded ? 'expanded' : ''}`} onClick={toggleExpand}>
+                    <h3>{title}</h3>
+                    <div className="project-expand-icon">
+                        <i className="fas fa-chevron-down"></i>
+                    </div>
+                    <div className="project-content">
+                        <p>{description}</p>
+                        {isExpanded && (
+                            <div className="project-details">
+                                <p>{details}</p>
+                                {link && <a href={link} target="_blank" rel="noopener noreferrer">Learn more</a>}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const SkillsList = ({ skills }) => (
+            <div className="skills-list">
+                {skills.map((skill, index) => (
+                    <span key={index} className="skill-tag">{skill}</span>
+                ))}
+            </div>
+        );
+
+        const App = () => {
+            const [isDarkMode, setIsDarkMode] = useState(true);  // Initialize to true for dark mode
+
+            const toggleTheme = () => {
+                setIsDarkMode(!isDarkMode);
+                document.body.className = isDarkMode ? 'light-mode' : 'dark-mode';
+            };
+
+            useEffect(() => {
+                document.body.className = isDarkMode ? 'dark-mode' : 'light-mode';
+            }, [isDarkMode]);
+
+            const skills = ['JavaScript', 'React', 'Node.js', 'Python', 'CSS', 'HTML'];
+
+            return (
+                <div>
+                    <ToggleButton toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
+                    <Header name="Your Name" occupation="Software Engineer" city="Montreal" />
+                    <Section title="About" showSocialIcons={true}>
+                        <p>Brief introduction about yourself, your interests, and your career goals.</p>
+                    </Section>
+                    <Section title="Skills">
+                        <SkillsList skills={skills} />
+                    </Section>
+                    <Section title="Projects">
+                        <Project
+                            title="Project 1"
+                            description="Description of project 1. Highlight key features and technologies used."
+                            details="More detailed information about Project 1. Discuss the challenges you faced, the solutions you implemented, and the outcomes of the project. You can also mention any specific technologies or methodologies you used."
+                            link="#"
+                        />
+                        <Project
+                            title="Project 2"
+                            description="Description of project 2. Explain your role and the project's impact."
+                            details="In-depth explanation of Project 2. Talk about the project goals, your contributions, and the results achieved. You can also include any lessons learned or interesting aspects of the development process."
+                            link="#"
+                        />
+                    </Section>
+                    <Section title="Experience">
+                        <p>Your work experience details go here. Include your job titles, companies, and key responsibilities.</p>
+                    </Section>
+                    <Section title="Contact">
+                        <p>Your contact information and links go here. Include your email, LinkedIn, GitHub, etc.</p>
+                    </Section>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>
