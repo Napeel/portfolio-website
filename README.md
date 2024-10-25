@@ -1,2 +1,1 @@
-# portfolio-website
-my portfolio website
+version control for my portfolio website
