@@ -111,6 +111,8 @@
             margin-left: 1rem;
             font-size: 0.9rem;
             white-space: nowrap;
+            color: inherit;
+            transition: color 0.3s ease;
         }
 
         .location {
@@ -220,6 +222,133 @@
 
         .project.expanded .project-expand-icon {
             transform: rotate(180deg);
+        }
+        .project-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(28, 28, 28, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .project-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .project-modal-content {
+            background-color: #2a2a2a;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .project-modal-overlay.active .project-modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #b19cd9;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close-btn:hover {
+            color: #d8bfd8;
+        }
+
+        /* Modal Content Styles */
+        .modal-content {
+            color: #ffffff;
+        }
+
+        .feature-section, .tech-stack {
+            margin: 2rem 0;
+        }
+
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .stack-item {
+            background-color: rgba(177, 156, 217, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .stack-item h4 {
+            color: #b19cd9;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .stack-item p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Light mode styles */
+        .light-mode .project-modal-content {
+            background-color: #ffffff;
+            color: #1c1c1c;
+        }
+
+        .light-mode .stack-item {
+            background-color: rgba(138, 43, 226, 0.1);
+        }
+
+        .light-mode .stack-item h4 {
+            color: #8a2be2;
+        }
+
+        /* Learn More Button */
+        .learn-more-btn {
+            background-color: #b19cd9;
+            color: #1c1c1c;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .learn-more-btn:hover {
+            background-color: #d8bfd8;
+            transform: translateY(-2px);
+        }
+
+        .light-mode .learn-more-btn {
+            background-color: #8a2be2;
+            color: #ffffff;
+        }
+
+        .light-mode .learn-more-btn:hover {
+            background-color: #9370db;
         }
 
         .skills-list {
@@ -1054,30 +1183,6 @@
             /* This ensures the name color matches the current theme */
         }
 
-        /* Remove any hover effects */
-        .name-effect:hover {
-            /* No special effects on hover */
-        }
-
-        .name-effect {
-            display: inline-block;
-            text-decoration: none;
-            color: inherit;
-            opacity: 1 !important;
-            /* Force opacity to be 1 */
-            visibility: visible !important;
-            /* Ensure visibility */
-            position: relative;
-            /* Add this to ensure proper stacking */
-            z-index: 10;
-            /* Ensure it's above other elements */
-        }
-
-        /* Remove any animations specifically for the name */
-        .animate-header .header-left>*:nth-child(2) {
-            animation: none;
-        }
-
         .header-left {
             overflow: visible;
         }
@@ -1379,6 +1484,77 @@
             overflow: hidden;
             /* This will hide the name when it slides out */
         }
+
+        /* Update the header-name styles to use slideFromLeft animation */
+        .header-name {
+            font-size: 24px;
+            margin: 0;
+            padding: 0;
+            color: inherit;
+            opacity: 0; /* Start invisible */
+            display: inline-block;
+        }
+
+        /* Add animation for the name */
+        .animate-header .header-name {
+            animation: slideFromLeft 1s ease-out forwards;
+            animation-delay: 0.2s; /* Slightly delayed after menu button */
+        }
+
+        /* Update header-left to ensure proper positioning */
+        .header-left {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 10; /* Ensure it's above other elements */
+        }
+
+        /* Update header-name styles */
+        .header-name {
+            font-size: 24px;
+            margin: 0;
+            padding: 0 0 0 15px; /* Add left padding for spacing after menu button */
+            color: inherit;
+            opacity: 0;
+            display: inline-block;
+            position: relative;
+            z-index: 10; /* Ensure it's above other elements */
+        }
+
+        /* Animation for the name */
+        .animate-header .header-name {
+            animation: slideFromLeft 1s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+
+        /* Update header-content to ensure proper stacking context */
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Update occupation styles to inherit colors properly */
+        .occupation {
+            margin-left: 1rem;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+
+        /* Specific light mode styles for occupation */
+        .light-mode .occupation {
+            color: #1c1c1c;
+        }
+
+        /* Specific dark mode styles for occupation */
+        .dark-mode .occupation {
+            color: #ffffff;
+        }
     </style>
 </head>
 
@@ -1441,29 +1617,43 @@
             </section>
         );
 
-        const Project = ({ title, description, link, details }) => {
-            const [isExpanded, setIsExpanded] = useState(false);
-
-            const toggleExpand = (e) => {
-                e.preventDefault();
-                setIsExpanded(!isExpanded);
-            };
+        const ProjectModal = ({ isOpen, onClose, details }) => {
+            if (!isOpen) return null;
 
             return (
-                <div className={`project ${isExpanded ? 'expanded' : ''}`} onClick={toggleExpand}>
-                    <h3>{title}</h3>
-                    <div className="project-expand-icon">
-                        <i className="fas fa-chevron-down"></i>
+                <div className={`project-modal-overlay ${isOpen ? 'active' : ''}`} onClick={onClose}>
+                    <div className="project-modal-content" onClick={e => e.stopPropagation()}>
+                        <button className="modal-close-btn" onClick={onClose}>
+                            <i className="fas fa-times"></i>
+                        </button>
+                        <div className="modal-content">
+                            {details}
+                        </div>
                     </div>
-                    <div className="project-content">
+                </div>
+            );
+        };
+
+        const Project = ({ title, description, link, details }) => {
+            const [isModalOpen, setIsModalOpen] = useState(false);
+
+            return (
+                <div>
+                    <div className="project">
+                        <h3>{title}</h3>
                         <p>{description}</p>
-                        {isExpanded && (
-                            <div className="project-details">
-                                <p>{details}</p>
-                                {link && <a href={link} target="_blank" rel="noopener noreferrer">Learn more</a>}
-                            </div>
-                        )}
+                        <button 
+                            className="learn-more-btn"
+                            onClick={() => setIsModalOpen(true)}
+                        >
+                            Learn More
+                        </button>
                     </div>
+                    <ProjectModal 
+                        isOpen={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        details={details}
+                    />
                 </div>
             );
         };
@@ -1594,10 +1784,56 @@
                         </Section>
                         <Section title="Projects">
                             <Project
-                                title="Project 1"
-                                description="project 1 desc."
-                                details="detailed info"
-                                link="#"
+                                title="AI Movie Recommender"
+                                description="An emotion-based movie recommendation platform leveraging AI and natural language processing to suggest films based on users' emotional states and preferences. Features include personalized recommendations, smart search, and community-driven content discovery."
+                                details={
+                                    <div>
+                                        <div className="feature-section">
+                                            <h3>Key Features</h3>
+                                            <ul>
+                                                <li>Emotion-based movie recommendations powered by advanced NLP</li>
+                                                <li>Secure user authentication and personalized profiles</li>
+                                                <li>Smart search with history-based suggestions</li>
+                                                <li>Comprehensive filtering system (rating, duration, genre)</li>
+                                                <li>Trending movies and 'Hidden Gems' discovery sections</li>
+                                                <li>Community feedback and rating system</li>
+                                                <li>Integrated donation platform for community support</li>
+                                                <li>Data collection system for continuous model improvement</li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="tech-stack">
+                                            <h3>Technical Stack</h3>
+                                            <div className="stack-grid">
+                                                <div className="stack-item">
+                                                    <h4>Frontend</h4>
+                                                    <p>React.js, HTML5, CSS3, Material-UI</p>
+                                                </div>
+                                                <div className="stack-item">
+                                                    <h4>Backend</h4>
+                                                    <p>Python, Flask, RESTful APIs</p>
+                                                </div>
+                                                <div className="stack-item">
+                                                    <h4>Database</h4>
+                                                    <p>PostgreSQL, Redis for caching</p>
+                                                </div>
+                                                <div className="stack-item">
+                                                    <h4>AI/ML</h4>
+                                                    <p>Hugging Face Transformers, scikit-learn, TensorFlow</p>
+                                                </div>
+                                                <div className="stack-item">
+                                                    <h4>Authentication</h4>
+                                                    <p>JWT, OAuth 2.0</p>
+                                                </div>
+                                                <div className="stack-item">
+                                                    <h4>DevOps</h4>
+                                                    <p>Docker, AWS, CI/CD pipeline</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                link="https://github.com/yourusername/movie-recommender"
                             />
                             <Project
                                 title="Project 2"
