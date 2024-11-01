@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nabil Muzafar Shah - Personal Interests</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+            font-size: 16px;
+        }
+
+        .dark-mode {
+            background-color: #1c1c1c;
+            color: #ffffff;
+        }
+
+        .light-mode {
+            background-color: #ffffff;
+            color: #1c1c1c;
+        }
+
+        body header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(28, 28, 28, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            height: 80px;
+        }
+
+        .light-mode header {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 100%;
+            position: relative;
+            z-index: 5;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-name {
+            font-size: 24px;
+            margin: 0;
+            padding: 0 0 0 15px;
+            color: inherit;
+            display: inline-block;
+            position: relative;
+            z-index: 10;
+        }
+
+        .occupation {
+            margin-left: 1rem;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+
+        .light-mode .occupation {
+            color: #1c1c1c;
+        }
+
+        .dark-mode .occupation {
+            color: #ffffff;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px 20px;
+            }
+
+            .header-left {
+                margin-bottom: 5px;
+            }
+
+            .header-right {
+                margin-top: 0.5rem;
+                justify-content: flex-start;
+                width: 100%;
+            }
+
+            .occupation,
+            .location {
+                margin-left: 0;
+                margin-right: 1rem;
+                margin-top: 0.5rem;
+            }
+        }
+
+        .menu-button {
+            background: none;
+            border: none;
+            font-size: 32px !important;
+            cursor: pointer;
+            color: #b19cd9;
+            margin-right: 0.75rem;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            width: auto;
+        }
+
+        .menu-button i.fas.fa-cookie {
+            font-size: 32px !important;
+            width: auto;
+            height: auto;
+        }
+
+        .menu-button:hover {
+            color: #d8bfd8;
+        }
+
+        .light-mode .menu-button {
+            color: #8a2be2;
+        }
+
+        .light-mode .menu-button:hover {
+            color: #9370db;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .occupation,
+        .location {
+            margin-left: 1rem;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .location {
+            display: flex;
+            align-items: center;
+        }
+
+        .location-icon {
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-right {
+                margin-top: 0.5rem;
+                justify-content: flex-start;
+                width: 100%;
+            }
+
+            .occupation,
+            .location {
+                margin-left: 0;
+                margin-right: 1rem;
+                margin-top: 0.5rem;
+            }
+        }
+
+        .header-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 1rem 2rem;
+        }
+
+        .section {
+            padding: 4rem 1rem;
+        }
+
+        .section-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .light-mode .project {
+            background-color: #f0f0f0;
+        }
+
+        .dark-mode .project {
+            background-color: #2a2a2a;
+        }
+
+        .project:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .project.expanded {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-content {
+            max-height: 100px;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .project.expanded .project-content {
+            max-height: 1000px;
+        }
+
+        .project-details {
+            margin-top: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .project.expanded .project-details {
+            opacity: 1;
+        }
+
+        .project-expand-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .project.expanded .project-expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background-color: #0066cc;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        .dark-mode .skill-tag {
+            background-color: #66b3ff;
+            color: #1c1c1c;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+
+            body header {
+                height: auto;
+                padding: 10px 0;
+            }
+
+            body .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            body .header-info {
+                margin-top: 0.5rem;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            h2 {
+                font-size: 1.25rem;
+            }
+
+            h3 {
+                font-size: 1.1rem;
+            }
+
+            body .toggle-button {
+                top: 8px;
+                right: 8px;
+            }
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            color: inherit;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #0066cc;
+        }
+
+        .dark-mode .social-icons a:hover {
+            color: #66b3ff;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .skills-category {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skills-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .skills-category h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: #b19cd9;
+        }
+
+        .skills-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .skills-list li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .skills-list li::before {
+            content: "•";
+            color: #b19cd9;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-right: 0.5em;
+        }
+
+        .light-mode .skills-category {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .light-mode .skills-category h3 {
+            color: #8a2be2;
+        }
+
+        .light-mode .skills-list li::before {
+            color: #8a2be2;
+        }
+
+        .interests-button {
+            background: #b19cd9;
+            color: #1c1c1c;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .interests-button:hover {
+            background: #d8bfd8;
+        }
+
+        .light-mode .interests-button {
+            background: #8a2be2;
+            color: white;
+        }
+
+        .light-mode .interests-button:hover {
+            background: #9370db;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+        }
+
+        .full-screen-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(28, 28, 28, 0.9);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .full-screen-menu.fade-in {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .full-screen-menu.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .menu-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu-item {
+            font-size: 20px;
+            color: #b19cd9;
+            margin: 0.75rem 0;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .menu-item:hover {
+            color: #d8bfd8;
+            transform: scale(1.1);
+        }
+
+        .light-mode .menu-item {
+            color: #8a2be2;
+        }
+
+        .light-mode .menu-item:hover {
+            color: #9370db;
+        }
+
+        .fade-in .menu-item {
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        .fade-out .menu-item {
+            animation: slideOut 0.3s ease forwards;
+        }
+
+        .toggle-button {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #b19cd9;
+        }
+
+        .light-mode .toggle-button {
+            color: #8a2be2;
+        }
+
+        .occupation {
+            position: relative;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+
+        .occupation::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #b19cd9;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        .occupation:hover {
+            color: #d8bfd8;
+        }
+
+        .occupation:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .light-mode .occupation::after {
+            background-color: #8a2be2;
+        }
+
+        .light-mode .occupation:hover {
+            color: #9370db;
+        }
+
+        .name-effect {
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .name-effect:hover {
+            animation: colorLoop 2s linear infinite;
+            text-decoration: none;
+        }
+
+        .light-mode .name-effect {
+            color: #8a2be2;
+        }
+
+        @keyframes colorLoop {
+            0% {
+                color: #b19cd9;
+            }
+
+            25% {
+                color: #ff69b4;
+            }
+
+            50% {
+                color: #00ced1;
+            }
+
+            75% {
+                color: #ffa500;
+            }
+
+            100% {
+                color: #b19cd9;
+            }
+        }
+
+        @keyframes colorLoopLight {
+            0% {
+                color: #8a2be2;
+            }
+
+            25% {
+                color: #ff1493;
+            }
+
+            50% {
+                color: #1e90ff;
+            }
+
+            75% {
+                color: #ff4500;
+            }
+
+            100% {
+                color: #8a2be2;
+            }
+        }
+
+        .light-mode .name-effect:hover {
+            animation: colorLoopLight 2s linear infinite;
+        }
+
+        .name-effect::after {
+            content: none;
+        }
+
+        .location {
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .location:hover {
+            background-color: rgba(177, 156, 217, 0.2);
+        }
+
+        .location:hover .location-icon,
+        .location:hover .city-name {
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        .location-icon {
+            margin-right: 5px;
+            font-size: 1.2em;
+            color: #b19cd9;
+            transition: color 0.3s ease;
+        }
+
+        .city-name {
+            color: #b19cd9;
+            transition: color 0.3s ease;
+        }
+
+        .location:hover .location-icon,
+        .location:hover .city-name {
+            color: #d8bfd8;
+        }
+
+        .light-mode .location-icon,
+        .light-mode .city-name {
+            color: #8a2be2;
+        }
+
+        .light-mode .location:hover {
+            background-color: rgba(138, 43, 226, 0.1);
+        }
+
+        .light-mode .location:hover .location-icon,
+        .light-mode .location:hover .city-name {
+            color: #9370db;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .weather-icon {
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        #custom-cursor {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #ff00ff;
+            /* Bright magenta color */
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff, 0 0 45px #ff00ff;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff, 0 0 45px #ff00ff;
+            }
+
+            50% {
+                box-shadow: 0 0 25px #ffffff, 0 0 50px #ffffff, 0 0 75px #ffffff;
+            }
+
+            100% {
+                box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff, 0 0 45px #ff00ff;
+            }
+        }
+
+        body,
+        a,
+        button,
+        .menu-button,
+        .location,
+        .name-effect {
+            cursor: none !important;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: #b19cd9;
+            text-shadow:
+                1.5px 1.5px 0px #8a2be2,
+                3px 3px 0px rgba(0, 0, 0, 0.2);
+            transition: color 0.3s ease;
+        }
+
+        .light-mode .section-header h2 {
+            color: #8a2be2;
+            text-shadow:
+                1.5px 1.5px 0px #b19cd9,
+                3px 3px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .section-header h2 {
+                font-size: 1.75rem;
+                text-shadow:
+                    1px 1px 0px #8a2be2,
+                    2px 2px 0px rgba(0, 0, 0, 0.2);
+            }
+
+            .light-mode .section-header h2 {
+                text-shadow:
+                    1px 1px 0px #b19cd9,
+                    2px 2px 0px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        #typed-header,
+        .header-left {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            min-height: 4.5em;
+        }
+
+        .typed-cursor {
+            font-size: 1.2rem;
+        }
+
+        .name-effect:hover {
+            color: #d8bfd8;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .menu-button,
+        .name-effect,
+        .occupation,
+        .location,
+        .toggle-button,
+        .section-header h2,
+        .project h3,
+        .skills-category h3,
+        p,
+        .skills-list li,
+        .menu-item {
+            font-size: 16px;
+            line-height: 1.2;
+        }
+
+        .menu-button i,
+        .location-icon,
+        .toggle-button i {
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+
+            .menu-button,
+            .name-effect,
+            .occupation,
+            .location,
+            .toggle-button,
+            .section-header h2,
+            .project h3,
+            .skills-category h3,
+            p,
+            .skills-list li,
+            .menu-item {
+                font-size: 14px;
+            }
+
+            .menu-button i,
+            .location-icon,
+            .toggle-button i {
+                font-size: 14px;
+            }
+        }
+
+        .name-effect {
+            padding-left: 0.5rem;
+        }
+
+        .name-effect {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1;
+            padding-left: 0.5rem;
+        }
+
+        .occupation,
+        .location,
+        .toggle-button {
+            font-size: 20px;
+            margin-left: 0.5rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .location-icon {
+            margin-right: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+
+            .header-right {
+                margin-top: 0.25rem;
+            }
+
+            .occupation,
+            .location,
+            .toggle-button {
+                margin-left: 0;
+                margin-right: 0.5rem;
+            }
+        }
+
+        .name-effect {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            padding-left: 0.5rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .occupation,
+        .location,
+        .toggle-button {
+            font-size: 16px;
+            margin-left: 0.5rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .location-icon {
+            margin-right: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                height: auto;
+            }
+
+            .header-content {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                padding: 2px 0.25rem;
+            }
+
+            .header-right {
+                margin-top: 2px;
+            }
+
+            .occupation,
+            .location,
+            .toggle-button {
+                margin-left: 0;
+                margin-right: 0.5rem;
+            }
+        }
+
+        .full-screen-menu .menu-content .menu-item {
+            font-size: 20px !important;
+            font-weight: bold !important;
+            color: #b19cd9 !important;
+            margin: 0.75rem 0 !important;
+            cursor: pointer !important;
+            transition: color 0.3s ease !important;
+        }
+
+        .full-screen-menu .menu-content .menu-item:hover {
+            color: #d8bfd8 !important;
+        }
+
+        .light-mode .full-screen-menu .menu-content .menu-item {
+            color: #8a2be2 !important;
+        }
+
+        .light-mode .full-screen-menu .menu-content .menu-item:hover {
+            color: #9370db !important;
+        }
+
+        .name-effect {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            padding-left: 0.75rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .occupation,
+        .location,
+        .toggle-button {
+            font-size: 18px;
+            margin-left: 0.75rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .location-icon {
+            margin-right: 0.3rem;
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                height: auto;
+            }
+
+            .header-content {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                padding: 4px 0.5rem;
+            }
+
+            .header-right {
+                margin-top: 4px;
+            }
+
+            .occupation,
+            .location,
+            .toggle-button {
+                margin-left: 0;
+                margin-right: 0.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="dark-mode">
+    <div id="root"></div>
+    <div id="custom-cursor"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const ToggleButton = ({ toggleTheme, isDarkMode }) => (
+            <button className="toggle-button" onClick={toggleTheme}>
+                <i className={isDarkMode ? "far fa-sun" : "far fa-moon"}></i>
+            </button>
+        );
+
+        const Header = ({ name, occupation, city, toggleMenu, toggleTheme, isDarkMode }) => {
+            const scrollToTop = () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            };
+
+            return (
+                <header>
+                    <div className="header-content">
+                        <div className="header-left">
+                            <button className="menu-button" onClick={toggleMenu} aria-label="Menu">
+                                <i className="fas fa-cookie"></i>
+                            </button>
+                            <h1 className="header-name" onClick={scrollToTop}>{name}</h1>
+                        </div>
+                        <div className="header-right">
+                            <span className="occupation">{occupation}</span>
+                            <a href="https://www.google.com/maps/place/Montreal,+QC" target="_blank" rel="noopener noreferrer" className="location">
+                                <i className="fas fa-map-marker-alt location-icon"></i>
+                                <span className="city-name">{city}</span>
+                            </a>
+                            <ToggleButton toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
+                        </div>
+                    </div>
+                </header>
+            );
+        };
+
+        const SocialIcons = () => (
+            <div className="social-icons">
+                <a href="https://github.com/Napeel" target="_blank" rel="noopener noreferrer">
+                    <i className="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">
+                    <i className="fab fa-linkedin"></i>
+                </a>
+            </div>
+        );
+
+        const Section = ({ title, children, showSocialIcons = false }) => (
+            <section className="section">
+                <div className="section-content">
+                    <div className="section-header">
+                        <h2>{title}</h2>
+                        {showSocialIcons && <SocialIcons />}
+                    </div>
+                    {children}
+                </div>
+            </section>
+        );
+
+        const FullScreenMenu = ({ isOpen, closeMenu }) => {
+            const [menuState, setMenuState] = useState('closed');
+
+            useEffect(() => {
+                if (isOpen && menuState === 'closed') {
+                    setMenuState('opening');
+                } else if (!isOpen && menuState === 'open') {
+                    setMenuState('closing');
+                }
+            }, [isOpen]);
+
+            useEffect(() => {
+                if (menuState === 'opening') {
+                    const timer = setTimeout(() => setMenuState('open'), 300);
+                    return () => clearTimeout(timer);
+                } else if (menuState === 'closing') {
+                    const timer = setTimeout(() => setMenuState('closed'), 300);
+                    return () => clearTimeout(timer);
+                }
+            }, [menuState]);
+
+            if (menuState === 'closed') return null;
+
+            return (
+                <div
+                    className={`full-screen-menu ${menuState === 'opening' || menuState === 'open' ? 'fade-in' : 'fade-out'}`}
+                    onClick={(e) => {
+                        if (e.target.classList.contains('full-screen-menu')) {
+                            closeMenu();
+                        }
+                    }}
+                >
+                    <div className="menu-content">
+                        <div className="menu-item" onClick={() => { window.location.href = 'sss.html'; }}>Home</div>
+                        <div className="menu-item" onClick={() => { window.location.href = 'interests.html'; }}>Personal Interests</div>
+                        <div className="menu-item" onClick={() => { window.location.href = 'contact.html'; }}>Contact</div>
+                    </div>
+                </div>
+            );
+        };
+
+        const InterestsSection = () => (
+            <Section title="Personal Interests">
+                <p>Here are some of my personal interests:</p>
+                <ul>
+                    <li>Interest 1</li>
+                    <li>Interest 2</li>
+                    <li>Interest 3</li>
+                    {/* Add more interests as needed */}
+                </ul>
+            </Section>
+        );
+
+        const App = () => {
+            const [isDarkMode, setIsDarkMode] = useState(true);
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+            const toggleTheme = () => {
+                setIsDarkMode(!isDarkMode);
+                document.body.className = isDarkMode ? 'light-mode' : 'dark-mode';
+            };
+
+            const toggleMenu = () => {
+                setIsMenuOpen(!isMenuOpen);
+            };
+
+            const closeMenu = () => {
+                setIsMenuOpen(false);
+            };
+
+            useEffect(() => {
+                document.body.className = isDarkMode ? 'dark-mode' : 'light-mode';
+            }, [isDarkMode]);
+
+            return (
+                <div>
+                    <Header
+                        name="Nabil Muzafar Shah"
+                        occupation="Software Engineer"
+                        city="Montreal"
+                        toggleMenu={toggleMenu}
+                        toggleTheme={toggleTheme}
+                        isDarkMode={isDarkMode}
+                    />
+                    <FullScreenMenu isOpen={isMenuOpen} closeMenu={closeMenu} />
+                    <main>
+                        <InterestsSection />
+                    </main>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.getElementById('custom-cursor');
+            console.log('Cursor element:', cursor);
+
+            // Hide cursor initially
+            cursor.style.opacity = '0';
+
+            // Set initial cursor position to the center of the screen
+            const setInitialCursorPosition = () => {
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                cursor.style.left = `${centerX}px`;
+                cursor.style.top = `${centerY}px`;
+            };
+
+            setInitialCursorPosition();
+
+            // Show cursor after a short delay
+            setTimeout(() => {
+                cursor.style.opacity = '1';
+            }, 300);
+
+            const updateCursor = (e) => {
+                cursor.style.left = `${e.clientX}px`;
+                cursor.style.top = `${e.clientY}px`;
+            };
+
+            document.addEventListener('mousemove', updateCursor);
+
+            // Update cursor position on window resize
+            window.addEventListener('resize', setInitialCursorPosition);
+
+            const hoverElements = document.querySelectorAll('a, button, .menu-button, .location, .name-effect');
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursor.style.width = '30px';
+                    cursor.style.height = '30px';
+                    cursor.style.backgroundColor = '#ffffff';
+                    cursor.style.mixBlendMode = 'difference';
+                });
+                element.addEventListener('mouseleave', () => {
+                    cursor.style.width = '20px';
+                    cursor.style.height = '20px';
+                    cursor.style.backgroundColor = '#ff00ff';
+                    cursor.style.mixBlendMode = 'normal';
+                });
+            });
+
+            document.addEventListener('mousedown', () => {
+                cursor.style.width = '35px';
+                cursor.style.height = '35px';
+            });
+
+            document.addEventListener('mouseup', () => {
+                cursor.style.width = '20px';
+                cursor.style.height = '20px';
+            });
+
+            console.log('Custom cursor script loaded and executed');
+        });
+    </script>
+</body>
+
+</html>
