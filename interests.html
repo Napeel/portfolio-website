@@ -745,7 +745,6 @@
             height: 20px;
             border-radius: 50%;
             background-color: #ff00ff;
-            /* Bright magenta color */
             position: fixed;
             pointer-events: none;
             z-index: 10000;
@@ -1156,7 +1155,6 @@
                     <li>Interest 1</li>
                     <li>Interest 2</li>
                     <li>Interest 3</li>
-                    {/* Add more interests as needed */}
                 </ul>
             </Section>
         );
@@ -1205,12 +1203,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const cursor = document.getElementById('custom-cursor');
-            console.log('Cursor element:', cursor);
-
-            // Hide cursor initially
-            cursor.style.opacity = '0';
-
-            // Set initial cursor position to the center of the screen
             const setInitialCursorPosition = () => {
                 const centerX = window.innerWidth / 2;
                 const centerY = window.innerHeight / 2;
@@ -1220,7 +1212,6 @@
 
             setInitialCursorPosition();
 
-            // Show cursor after a short delay
             setTimeout(() => {
                 cursor.style.opacity = '1';
             }, 300);
@@ -1232,7 +1223,6 @@
 
             document.addEventListener('mousemove', updateCursor);
 
-            // Update cursor position on window resize
             window.addEventListener('resize', setInitialCursorPosition);
 
             const hoverElements = document.querySelectorAll('a, button, .menu-button, .location, .name-effect');
@@ -1260,8 +1250,6 @@
                 cursor.style.width = '20px';
                 cursor.style.height = '20px';
             });
-
-            console.log('Custom cursor script loaded and executed');
         });
     </script>
 </body>
